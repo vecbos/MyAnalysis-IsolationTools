@@ -5,11 +5,14 @@
 #include "DataFormats/EgammaCandidates/interface/GsfElectronFwd.h"
 #include "DataFormats/EcalRecHit/interface/EcalRecHitCollections.h"
 #include "DataFormats/GeometryVector/interface/GlobalPoint.h"
+#include "DataFormats/DetId/interface/DetId.h"
 #include "Geometry/CaloGeometry/interface/CaloSubdetectorGeometry.h"
 #include "DataFormats/EcalRecHit/interface/EcalRecHitCollections.h"
+
 #include "FWCore/Framework/interface/Event.h"
 #include "FWCore/Framework/interface/EventSetup.h"
 
+#include <vector>
 
 class SuperClusterHitsEcalIsolation {
  public:
@@ -25,8 +28,8 @@ class SuperClusterHitsEcalIsolation {
   //! the radius of the external cone 
   void setExtRadius (float extRadius) { m_extRadius = extRadius; }
 
-  //! add n more rows of crystals around the supercluster
-  // void addCrystalStrips(int nstrips) { m_additionalStrips = nstrips; }
+  //! exclude a halo of 1 additional crystal strip around the super cluster from energy sum
+  void excludeHalo(bool what) { m_excludeHalo = what; }
 
   //! get the sum of the energies
   float getSum(const edm::Event & iEvent, const edm::EventSetup & iSetup, const reco::GsfElectron *gsfEle);
@@ -36,11 +39,14 @@ class SuperClusterHitsEcalIsolation {
   float collect( const GlobalPoint &caloPosition, const CaloSubdetectorGeometry* subdet,
                  const  std::vector<DetId> scHitsByDetId, const EcalRecHitCollection &hits);
 
+  std::vector<DetId> get3x3(const DetId *id);
+
   const reco::GsfElectron *m_gsfEle;
   const EcalRecHitCollection *m_ebRecHits;
   const EcalRecHitCollection *m_eeRecHits;
 
   float m_extRadius;
+  bool m_excludeHalo;
 
 };
 

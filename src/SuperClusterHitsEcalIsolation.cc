@@ -1,8 +1,9 @@
 #include "FWCore/Framework/interface/ESHandle.h"
 #include "Geometry/Records/interface/CaloGeometryRecord.h"
-#include "Geometry/CaloGeometry/interface/CaloSubdetectorGeometry.h"
 #include "Geometry/CaloGeometry/interface/CaloGeometry.h"
 #include "DataFormats/EcalDetId/interface/EcalSubdetector.h"
+#include "DataFormats/EcalDetId/interface/EBDetId.h"
+#include "DataFormats/EcalDetId/interface/EEDetId.h"
 
 #include "MyAnalysis/IsolationTools/interface/SuperClusterHitsEcalIsolation.h"
 
@@ -11,7 +12,8 @@ SuperClusterHitsEcalIsolation::SuperClusterHitsEcalIsolation(const EcalRecHitCol
 
   m_ebRecHits = ebRecHits;
   m_eeRecHits = eeRecHits;
-  
+  m_excludeHalo = false;
+
 }
 
 float SuperClusterHitsEcalIsolation::getSum(const edm::Event & iEvent, const edm::EventSetup & iSetup, const reco::GsfElectron *gsfEle) {
@@ -54,19 +56,34 @@ float SuperClusterHitsEcalIsolation::collect( const GlobalPoint &caloPosition, c
     j=hits.find(*i);
     
     bool usedInSuperCluster = false;
+    bool scNeighbour = false;
+
     std::vector<DetId>::const_iterator scDetId;
     for(scDetId=scHitsByDetId.begin(); scDetId!=scHitsByDetId.end(); ++scDetId) {
       if((*i)==(*scDetId)) {
         usedInSuperCluster=true;
         break;
+      } else {
+        std::vector<DetId> neighbours = get3x3(&(*scDetId));
+        std::vector<DetId>::const_iterator neighbourId;
+        for(neighbourId=neighbours.begin(); neighbourId!=neighbours.end(); neighbourId++) {
+          if((*i)==(*neighbourId)) {
+            scNeighbour=true;
+            break;
+          }
+        }
       }
     }
 
+
     if(j != hits.end() && !usedInSuperCluster){
 
-      double energy = j->energy();
-      energySum += energy;
-      
+      if( m_excludeHalo && scNeighbour ) {}
+      else {
+        double energy = j->energy();
+        energySum += energy;
+      }
+
     }
   }
 
@@ -74,3 +91,32 @@ float SuperClusterHitsEcalIsolation::collect( const GlobalPoint &caloPosition, c
 
 }
 
+std::vector<DetId> SuperClusterHitsEcalIsolation::get3x3(const DetId *id) {
+
+  std::vector<DetId> neighbours;
+  for(int icry=0; icry<9; ++icry) {
+    unsigned int row    = icry/3;
+    unsigned int column = icry%3;
+    if(id->subdetId()==EcalBarrel) {
+      EBDetId ebid(*id);
+      int icryEta = ebid.ieta()+column-1;
+      int icryPhi = ebid.iphi()+row-1;
+      if ( EBDetId::validDetId(icryEta, icryPhi) ) {
+        EBDetId id3x3 = EBDetId(icryEta, icryPhi, EBDetId::ETAPHIMODE);
+        neighbours.push_back(id3x3);
+      }
+    } else if(id->subdetId()==EcalEndcap) {
+      EEDetId eeid(*id);
+      int icryX = eeid.ix()+column-1;
+      int icryY = eeid.iy()+row-1;
+      int zside = eeid.zside();
+      if ( EEDetId::validDetId(icryX, icryY, zside) ) {
+        EEDetId id3x3 = EEDetId(icryX, icryY, zside, EEDetId::XYMODE);
+        neighbours.push_back(id3x3);
+      }
+    }
+  }
+  
+  return neighbours;
+
+}
