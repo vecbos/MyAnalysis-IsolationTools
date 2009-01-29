@@ -16,12 +16,9 @@ SuperClusterHitsEcalIsolation::SuperClusterHitsEcalIsolation(const EcalRecHitCol
 
 }
 
-float SuperClusterHitsEcalIsolation::getSum(const edm::Event & iEvent, const edm::EventSetup & iSetup, const reco::GsfElectron *gsfEle) {
+float SuperClusterHitsEcalIsolation::getSum(const edm::Event & iEvent, const edm::EventSetup & iSetup, const reco::SuperCluster *scluster) {
 
-  m_gsfEle = gsfEle;
-
-  reco::SuperClusterRef sc = m_gsfEle->get<reco::SuperClusterRef>();
-  math::XYZPoint caloPosition = sc->position();
+  math::XYZPoint caloPosition = scluster->position();
   const GlobalPoint point(caloPosition.x(), caloPosition.y() , caloPosition.z());
 
   edm::ESHandle<CaloGeometry> pG;
@@ -33,8 +30,8 @@ float SuperClusterHitsEcalIsolation::getSum(const edm::Event & iEvent, const edm
   float sum = 0.0;
   // sum all the rechits in the circle
   // not considering rechits belonging to sc
-  const  std::vector<DetId> scHitsByDetId = sc->getHitsByDetId();
-  if( fabs(sc->eta()) < 1.479 ) {
+  const  std::vector<DetId> scHitsByDetId = scluster->getHitsByDetId();
+  if( fabs(scluster->eta()) < 1.479 ) {
     sum = collect(point, barrelgeom, scHitsByDetId, *m_ebRecHits);
   } else {
     sum = collect(point, endcapgeom, scHitsByDetId, *m_eeRecHits);

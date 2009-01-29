@@ -32,7 +32,7 @@ class SuperClusterHitsEcalIsolation {
   void excludeHalo(bool what) { m_excludeHalo = what; }
 
   //! get the sum of the energies
-  float getSum(const edm::Event & iEvent, const edm::EventSetup & iSetup, const reco::GsfElectron *gsfEle);
+  float getSum(const edm::Event & iEvent, const edm::EventSetup & iSetup, const reco::SuperCluster *scluster);
 
  private:
 
@@ -41,7 +41,6 @@ class SuperClusterHitsEcalIsolation {
 
   std::vector<DetId> get3x3(const DetId *id);
 
-  const reco::GsfElectron *m_gsfEle;
   const EcalRecHitCollection *m_ebRecHits;
   const EcalRecHitCollection *m_eeRecHits;
 
