@@ -37,7 +37,7 @@ class SuperClusterHitsEcalIsolation {
  private:
 
   float collect( const GlobalPoint &caloPosition, const CaloSubdetectorGeometry* subdet,
-                 const  std::vector<DetId> scHitsByDetId, const EcalRecHitCollection &hits);
+                 const  std::vector< std::pair<DetId, float> > scHitsByDetId, const EcalRecHitCollection &hits);
 
   std::vector<DetId> get3x3(const DetId *id);
 

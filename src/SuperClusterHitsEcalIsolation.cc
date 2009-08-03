@@ -30,7 +30,8 @@ float SuperClusterHitsEcalIsolation::getSum(const edm::Event & iEvent, const edm
   float sum = 0.0;
   // sum all the rechits in the circle
   // not considering rechits belonging to sc
-  const  std::vector<DetId> scHitsByDetId = scluster->getHitsByDetId();
+  std::vector< std::pair<DetId, float> > scHitsByDetId = scluster->hitsAndFractions();
+  //  const  std::vector<DetId> scHitsByDetId = scluster->getHitsByDetId();
   if( fabs(scluster->eta()) < 1.479 ) {
     sum = collect(point, barrelgeom, scHitsByDetId, *m_ebRecHits);
   } else {
@@ -42,7 +43,7 @@ float SuperClusterHitsEcalIsolation::getSum(const edm::Event & iEvent, const edm
 }
 
 float SuperClusterHitsEcalIsolation::collect( const GlobalPoint &caloPosition, const CaloSubdetectorGeometry* subdet, 
-                                              const  std::vector<DetId> scHitsByDetId, const EcalRecHitCollection &hits) {
+                                              std::vector< std::pair<DetId, float> > scHitsByDetId, const EcalRecHitCollection &hits) {
   
   float energySum = 0.0;
   
@@ -55,13 +56,14 @@ float SuperClusterHitsEcalIsolation::collect( const GlobalPoint &caloPosition, c
     bool usedInSuperCluster = false;
     bool scNeighbour = false;
 
-    std::vector<DetId>::const_iterator scDetId;
-    for(scDetId=scHitsByDetId.begin(); scDetId!=scHitsByDetId.end(); ++scDetId) {
-      if((*i)==(*scDetId)) {
+    std::vector<DetId>::iterator scDetId;
+    for(std::vector< std::pair<DetId, float> >::iterator scDetId = scHitsByDetId.begin(); scDetId != scHitsByDetId.end(); ++scDetId){
+      //    for(scDetId=scHitsByDetId.begin(); scDetId!=scHitsByDetId.end(); ++scDetId) {
+      if((*i)==(*scDetId).first) {
         usedInSuperCluster=true;
         break;
       } else {
-        std::vector<DetId> neighbours = get3x3(&(*scDetId));
+        std::vector<DetId> neighbours = get3x3(&(*scDetId).first);
         std::vector<DetId>::const_iterator neighbourId;
         for(neighbourId=neighbours.begin(); neighbourId!=neighbours.end(); neighbourId++) {
           if((*i)==(*neighbourId)) {
