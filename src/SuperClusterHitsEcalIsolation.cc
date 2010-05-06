@@ -42,6 +42,31 @@ float SuperClusterHitsEcalIsolation::getSum(const edm::Event & iEvent, const edm
 
 }
 
+float SuperClusterHitsEcalIsolation::getSum(const edm::Event & iEvent, const edm::EventSetup & iSetup, const reco::BasicCluster *bcluster) {
+
+  math::XYZPoint caloPosition = bcluster->position();
+  const GlobalPoint point(caloPosition.x(), caloPosition.y() , caloPosition.z());
+
+  edm::ESHandle<CaloGeometry> pG;
+  iSetup.get<CaloGeometryRecord>().get(pG);
+  const CaloGeometry* caloGeom = pG.product(); 
+  const CaloSubdetectorGeometry* barrelgeom = caloGeom->getSubdetectorGeometry(DetId::Ecal,EcalBarrel);
+  const CaloSubdetectorGeometry* endcapgeom = caloGeom->getSubdetectorGeometry(DetId::Ecal,EcalEndcap);
+
+  float sum = 0.0;
+  // sum all the rechits in the circle
+  // not considering rechits belonging to bc
+  std::vector< std::pair<DetId, float> > bcHitsByDetId = bcluster->hitsAndFractions();
+  if( fabs(bcluster->eta()) < 1.479 ) {
+    sum = collect(point, barrelgeom, bcHitsByDetId, *m_ebRecHits);
+  } else {
+    sum = collect(point, endcapgeom, bcHitsByDetId, *m_eeRecHits);
+  }
+
+  return sum;
+
+}
+
 float SuperClusterHitsEcalIsolation::collect( const GlobalPoint &caloPosition, const CaloSubdetectorGeometry* subdet, 
                                               std::vector< std::pair<DetId, float> > scHitsByDetId, const EcalRecHitCollection &hits) {
   

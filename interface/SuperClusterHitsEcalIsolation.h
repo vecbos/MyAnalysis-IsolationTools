@@ -3,6 +3,7 @@
 
 #include "DataFormats/EgammaCandidates/interface/GsfElectron.h"
 #include "DataFormats/EgammaCandidates/interface/GsfElectronFwd.h"
+#include "DataFormats/EgammaReco/interface/BasicCluster.h"
 #include "DataFormats/EcalRecHit/interface/EcalRecHitCollections.h"
 #include "DataFormats/GeometryVector/interface/GlobalPoint.h"
 #include "DataFormats/DetId/interface/DetId.h"
@@ -31,8 +32,11 @@ class SuperClusterHitsEcalIsolation {
   //! exclude a halo of 1 additional crystal strip around the super cluster from energy sum
   void excludeHalo(bool what) { m_excludeHalo = what; }
 
-  //! get the sum of the energies
+  //! get the sum of the energies in a SuperCluster
   float getSum(const edm::Event & iEvent, const edm::EventSetup & iSetup, const reco::SuperCluster *scluster);
+
+  //! get the sum of the energies in a BasicCluster
+  float getSum(const edm::Event & iEvent, const edm::EventSetup & iSetup, const reco::BasicCluster *bcluster);
 
  private:
 
