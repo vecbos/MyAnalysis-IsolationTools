@@ -5,5 +5,6 @@ electronPFIsoSingleTypeMapProd = cms.EDProducer('ElectronPFIsoSingleTypeMapProd'
                                                 vtxLabel = cms.untracked.InputTag("offlinePrimaryVertices"),
                                                 pfLabel = cms.untracked.InputTag("pfNoPileUp"),
                                                 deltaR = cms.untracked.double(0.4),
-                                                pfTypes = cms.untracked.vint32(1, 2, 3, 4, 5)
+                                                pfTypes = cms.untracked.vint32(1, 2, 3, 4, 5),
+                                                directional = cms.untracked.bool(False)
                                                 )

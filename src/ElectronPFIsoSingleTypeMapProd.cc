@@ -9,6 +9,7 @@
 
 #include "FWCore/ParameterSet/interface/ParameterSet.h"
 
+#include "DataFormats/Math/interface/deltaR.h"
 #include "DataFormats/EgammaCandidates/interface/GsfElectron.h"
 #include "DataFormats/EgammaCandidates/interface/GsfElectronFwd.h"
 #include "DataFormats/VertexReco/interface/Vertex.h"
@@ -17,6 +18,7 @@
 #include "DataFormats/ParticleFlowCandidate/interface/PFCandidateFwd.h"
 
 #include "DataFormats/Common/interface/ValueMap.h"
+#include "TMath.h"
 
 class ElectronPFIsoSingleTypeMapProd : public edm::EDProducer {
 public:
@@ -33,6 +35,7 @@ private:
   edm::InputTag pfLabel_;
   std::vector<int> pfTypes_;
   double deltaR_;
+  bool directional_;
 
 };
 
@@ -43,7 +46,8 @@ ElectronPFIsoSingleTypeMapProd::ElectronPFIsoSingleTypeMapProd(const edm::Parame
   eleLabel_(iConfig.getUntrackedParameter<edm::InputTag>("eleLabel")),
   pfLabel_(iConfig.getUntrackedParameter<edm::InputTag>("pfLabel")),
   pfTypes_(iConfig.getUntrackedParameter<std::vector<int> >("pfTypes")),
-  deltaR_(iConfig.getUntrackedParameter<double>("deltaR")) {
+  deltaR_(iConfig.getUntrackedParameter<double>("deltaR")),
+  directional_(iConfig.getUntrackedParameter<bool>("directional")) {
 
     produces<edm::ValueMap<float> >().setBranchAlias("pfTypeElIso");
 }
@@ -70,6 +74,9 @@ void ElectronPFIsoSingleTypeMapProd::produce(edm::Event& iEvent, const edm::Even
     if(ele.track().isNonnull()) zLepton = ele.track()->dz(vtxH->at(0).position());
 
     Double_t ptSum =0.;  
+    math::XYZVector isoAngleSum;
+    std::vector<math::XYZVector> coneParticles;
+
     for (size_t j=0; j<pfH->size();j++) {   
       const reco::PFCandidate &pf = pfH->at(j);
 
@@ -111,19 +118,39 @@ void ElectronPFIsoSingleTypeMapProd::produce(edm::Event& iEvent, const edm::Even
         // https://indico.cern.ch/getFile.py/access?contribId=0&resId=0&materialId=slides&confId=154207
 
         // dR Veto for Gamma: no-one in EB, dR > 0.08 in EE
-        if (pf.particleId() == reco::PFCandidate::gamma && fabs(ele.superCluster()->eta()>1.479) 
+        if (pf.particleId() == reco::PFCandidate::gamma && fabs(ele.superCluster()->eta())>1.479 
             && ROOT::Math::VectorUtil::DeltaR(ele.momentum(), pf.momentum()) < 0.08) continue;
         
         // charged hadron: no-one in EB, dR > 0.015 in EE
-        if(pf.trackRef().isNonnull() && fabs(ele.superCluster()->eta()>1.479)
+        if(pf.trackRef().isNonnull() && fabs(ele.superCluster()->eta())>1.479
            && ROOT::Math::VectorUtil::DeltaR(ele.momentum(), pf.momentum()) < 0.015) continue; 
 
+        // neutral hadron: no-one in EB, InnerCone (One Tower = dR < 0.07) Veto for non-gamma neutrals
+        if (!pf.trackRef().isNonnull() && pf.particleId() == reco::PFCandidate::h0 && fabs(ele.superCluster()->eta())>1.479 
+            && ROOT::Math::VectorUtil::DeltaR(ele.momentum(), pf.momentum()) < 0.07 ) continue; 
+        
+        // scalar sum
         ptSum += pf.pt();            
-
+        
+        // directional sum
+        math::XYZVector transverse( pf.eta() - ele.eta()
+                                    , reco::deltaPhi(pf.phi(), ele.phi())
+                                    , 0);
+        transverse *= pf.pt() / transverse.rho();
+        if (transverse.rho() > 0) {
+          isoAngleSum += transverse;
+          coneParticles.push_back(transverse);
+        }
       }
 
     }
-    isoV.push_back(ptSum);
+
+    if (directional_) {
+      double directionalPT = 0;
+      for (unsigned int iPtcl = 0; iPtcl < coneParticles.size(); ++iPtcl)
+        directionalPT += pow(TMath::ACos( coneParticles[iPtcl].Dot(isoAngleSum) / coneParticles[iPtcl].rho() / isoAngleSum.rho() ),2) * coneParticles[iPtcl].rho();
+      isoV.push_back(directionalPT);
+    } else isoV.push_back(ptSum);
   }
 
   isoF.insert(eleH,isoV.begin(),isoV.end());

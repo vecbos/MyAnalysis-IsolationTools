@@ -9,6 +9,7 @@
 
 #include "FWCore/ParameterSet/interface/ParameterSet.h"
 
+#include "DataFormats/Math/interface/deltaR.h"
 #include "DataFormats/EgammaCandidates/interface/GsfElectron.h"
 #include "DataFormats/EgammaCandidates/interface/GsfElectronFwd.h"
 #include "DataFormats/MuonReco/interface/Muon.h"
@@ -19,6 +20,7 @@
 #include "DataFormats/ParticleFlowCandidate/interface/PFCandidateFwd.h"
 
 #include "DataFormats/Common/interface/ValueMap.h"
+#include "TMath.h"
 
 class MuonPFIsoSingleTypeMapProd : public edm::EDProducer {
 public:
@@ -35,6 +37,7 @@ private:
   edm::InputTag pfLabel_;
   std::vector<int> pfTypes_;
   double deltaR_;
+  double directional_;
 
 };
 
@@ -45,7 +48,8 @@ MuonPFIsoSingleTypeMapProd::MuonPFIsoSingleTypeMapProd(const edm::ParameterSet& 
   muonLabel_(iConfig.getUntrackedParameter<edm::InputTag>("muonLabel")),
   pfLabel_(iConfig.getUntrackedParameter<edm::InputTag>("pfLabel")),
   pfTypes_(iConfig.getUntrackedParameter<std::vector<int> >("pfTypes")),
-  deltaR_(iConfig.getUntrackedParameter<double>("deltaR")) {
+  deltaR_(iConfig.getUntrackedParameter<double>("deltaR")),
+  directional_(iConfig.getUntrackedParameter<bool>("directional")) {
 
   produces<edm::ValueMap<float> >().setBranchAlias("pfMuIso");
 }
@@ -72,6 +76,9 @@ void MuonPFIsoSingleTypeMapProd::produce(edm::Event& iEvent, const edm::EventSet
     if(mu.track().isNonnull()) zLepton = mu.track()->dz(vtxH->at(0).position());
 
     Double_t ptSum =0.;  
+    math::XYZVector isoAngleSum;
+    std::vector<math::XYZVector> coneParticles;
+
     for (size_t j=0; j<pfH->size();j++) {   
       const reco::PFCandidate &pf = pfH->at(j);
             
@@ -106,10 +113,29 @@ void MuonPFIsoSingleTypeMapProd::produce(edm::Event& iEvent, const edm::EventSet
           && dr < 0.0) continue;
 
       // add the pf pt if it is inside the extRadius 
-      if ( dr < deltaR_ ) ptSum += pf.pt();
+      if ( dr < deltaR_ ) {
+
+        // scalar sum
+        ptSum += pf.pt();
+
+        // directional sum
+        math::XYZVector transverse( pf.eta() - mu.eta()
+                                    , reco::deltaPhi(pf.phi(), mu.phi())
+                                    , 0);
+        transverse *= pf.pt() / transverse.rho();
+        if (transverse.rho() > 0) {
+          isoAngleSum += transverse;
+          coneParticles.push_back(transverse);
+        }
+      }
 
     }
-    isoV.push_back(ptSum);
+    if (directional_) {
+      double directionalPT = 0;
+      for (unsigned int iPtcl = 0; iPtcl < coneParticles.size(); ++iPtcl)
+        directionalPT += pow(TMath::ACos( coneParticles[iPtcl].Dot(isoAngleSum) / coneParticles[iPtcl].rho() / isoAngleSum.rho() ),2) * coneParticles[iPtcl].rho();
+      isoV.push_back(directionalPT);
+    } else isoV.push_back(ptSum);
   }
 
   isoF.insert(muH,isoV.begin(),isoV.end());
