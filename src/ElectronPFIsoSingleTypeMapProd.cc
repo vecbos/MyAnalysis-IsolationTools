@@ -114,6 +114,14 @@ void ElectronPFIsoSingleTypeMapProd::produce(edm::Event& iEvent, const edm::Even
       // add the pf pt if it is inside the extRadius and outside the intRadius
       if ( dr < deltaR_ && dr >= 0.0 ) {
 
+        // remove the eventual duplicates in pf-reco if the pfcand does not make a jpsi with ele
+        if (pf.particleId() == reco::PFCandidate::e) {
+          math::XYZTLorentzVector eleP4 = ele.p4();
+          math::XYZTLorentzVector pfP4 = pf.p4();
+          float invmass = (eleP4 + pfP4).mass();
+          if(invmass<2.5 || invmass>3.6) continue;
+        }
+
         // vetoes optimization from:
         // https://indico.cern.ch/getFile.py/access?contribId=0&resId=0&materialId=slides&confId=154207
 
@@ -126,8 +134,8 @@ void ElectronPFIsoSingleTypeMapProd::produce(edm::Event& iEvent, const edm::Even
            && ROOT::Math::VectorUtil::DeltaR(ele.momentum(), pf.momentum()) < 0.015) continue; 
 
         // neutral hadron: no-one in EB, InnerCone (One Tower = dR < 0.07) Veto for non-gamma neutrals
-        if (!pf.trackRef().isNonnull() && pf.particleId() == reco::PFCandidate::h0 && fabs(ele.superCluster()->eta())>1.479 
-            && ROOT::Math::VectorUtil::DeltaR(ele.momentum(), pf.momentum()) < 0.07 ) continue; 
+        // if (!pf.trackRef().isNonnull() && pf.particleId() == reco::PFCandidate::h0 && fabs(ele.superCluster()->eta())>1.479 
+        //    && ROOT::Math::VectorUtil::DeltaR(ele.momentum(), pf.momentum()) < 0.07 ) continue; 
         
         // scalar sum
         ptSum += pf.pt();            

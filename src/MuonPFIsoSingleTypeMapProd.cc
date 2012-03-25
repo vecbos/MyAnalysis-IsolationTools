@@ -107,6 +107,14 @@ void MuonPFIsoSingleTypeMapProd::produce(edm::Event& iEvent, const edm::EventSet
       //             }
       //             if (deltaZ >= 0.1) continue;
             
+      // remove the eventual duplicates in pf-reco if the pfcand does not make a jpsi with ele
+      if (pf.particleId() == reco::PFCandidate::mu) {
+        math::XYZTLorentzVector muP4 = mu.p4();
+        math::XYZTLorentzVector pfP4 = pf.p4();
+        float invmass = (muP4 + pfP4).mass();
+        if(invmass<2.5 || invmass>3.6) continue;
+      }
+
       // dR Veto for Gamma: no-one in EB, dR > 0.08 in EE
       Double_t dr = ROOT::Math::VectorUtil::DeltaR(mu.momentum(), pf.momentum());
       if (pf.particleId() == reco::PFCandidate::gamma && fabs(mu.eta()>1.479) 
