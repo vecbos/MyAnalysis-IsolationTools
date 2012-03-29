@@ -134,8 +134,8 @@ void ElectronPFIsoSingleTypeMapProd::produce(edm::Event& iEvent, const edm::Even
            && ROOT::Math::VectorUtil::DeltaR(ele.momentum(), pf.momentum()) < 0.015) continue; 
 
         // neutral hadron: no-one in EB, InnerCone (One Tower = dR < 0.07) Veto for non-gamma neutrals
-        // if (!pf.trackRef().isNonnull() && pf.particleId() == reco::PFCandidate::h0 && fabs(ele.superCluster()->eta())>1.479 
-        //    && ROOT::Math::VectorUtil::DeltaR(ele.momentum(), pf.momentum()) < 0.07 ) continue; 
+        if (!pf.trackRef().isNonnull() && pf.particleId() == reco::PFCandidate::h0 && fabs(ele.superCluster()->eta())>1.479 
+            && ROOT::Math::VectorUtil::DeltaR(ele.momentum(), pf.momentum()) < 0.07 ) continue; 
         
         // scalar sum
         ptSum += pf.pt();            
