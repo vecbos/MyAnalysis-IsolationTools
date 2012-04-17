@@ -3,142 +3,142 @@ import MyAnalysis.IsolationTools.muonPFIsoSingleType_cfi
 
 ### DR=0.1 cone
 # Charged Hadron isolation
-muonDirPFIsoChHad01 = MyAnalysis.IsolationTools.muonPFIsoSingleType_cfi.muonPFIsoSingleTypeMapProd.clone()
-muonDirPFIsoChHad01.pfTypes = cms.untracked.vint32(1)
-muonDirPFIsoChHad01.deltaR = 0.1
-muonDirPFIsoChHad01.radial = True
+muonRadPFIsoChHad01 = MyAnalysis.IsolationTools.muonPFIsoSingleType_cfi.muonPFIsoSingleTypeMapProd.clone()
+muonRadPFIsoChHad01.pfTypes = cms.untracked.vint32(1)
+muonRadPFIsoChHad01.deltaR = 0.1
+muonRadPFIsoChHad01.radial = True
 
 # Neutral Hadron isolation
-muonDirPFIsoNHad01 = MyAnalysis.IsolationTools.muonPFIsoSingleType_cfi.muonPFIsoSingleTypeMapProd.clone()
-muonDirPFIsoNHad01.pfTypes = cms.untracked.vint32(5)
-muonDirPFIsoNHad01.deltaR = 0.1
-muonDirPFIsoNHad01.radial = True
+muonRadPFIsoNHad01 = MyAnalysis.IsolationTools.muonPFIsoSingleType_cfi.muonPFIsoSingleTypeMapProd.clone()
+muonRadPFIsoNHad01.pfTypes = cms.untracked.vint32(5)
+muonRadPFIsoNHad01.deltaR = 0.1
+muonRadPFIsoNHad01.radial = True
 
 # Photon isolation
-muonDirPFIsoPhoton01 = MyAnalysis.IsolationTools.muonPFIsoSingleType_cfi.muonPFIsoSingleTypeMapProd.clone()
-muonDirPFIsoPhoton01.pfTypes = cms.untracked.vint32(4)
-muonDirPFIsoPhoton01.deltaR = 0.1
-muonDirPFIsoPhoton01.radial = True
+muonRadPFIsoPhoton01 = MyAnalysis.IsolationTools.muonPFIsoSingleType_cfi.muonPFIsoSingleTypeMapProd.clone()
+muonRadPFIsoPhoton01.pfTypes = cms.untracked.vint32(4)
+muonRadPFIsoPhoton01.deltaR = 0.1
+muonRadPFIsoPhoton01.radial = True
 
 
 ### DR=0.2 cone
 # Charged Hadron isolation
-muonDirPFIsoChHad02 = MyAnalysis.IsolationTools.muonPFIsoSingleType_cfi.muonPFIsoSingleTypeMapProd.clone()
-muonDirPFIsoChHad02.pfTypes = cms.untracked.vint32(1)
-muonDirPFIsoChHad02.deltaR = 0.2
-muonDirPFIsoChHad02.radial = True
+muonRadPFIsoChHad02 = MyAnalysis.IsolationTools.muonPFIsoSingleType_cfi.muonPFIsoSingleTypeMapProd.clone()
+muonRadPFIsoChHad02.pfTypes = cms.untracked.vint32(1)
+muonRadPFIsoChHad02.deltaR = 0.2
+muonRadPFIsoChHad02.radial = True
 
 # Neutral Hadron isolation
-muonDirPFIsoNHad02 = MyAnalysis.IsolationTools.muonPFIsoSingleType_cfi.muonPFIsoSingleTypeMapProd.clone()
-muonDirPFIsoNHad02.pfTypes = cms.untracked.vint32(5)
-muonDirPFIsoNHad02.deltaR = 0.2
-muonDirPFIsoNHad02.radial = True
+muonRadPFIsoNHad02 = MyAnalysis.IsolationTools.muonPFIsoSingleType_cfi.muonPFIsoSingleTypeMapProd.clone()
+muonRadPFIsoNHad02.pfTypes = cms.untracked.vint32(5)
+muonRadPFIsoNHad02.deltaR = 0.2
+muonRadPFIsoNHad02.radial = True
 
 # Photon isolation
-muonDirPFIsoPhoton02 = MyAnalysis.IsolationTools.muonPFIsoSingleType_cfi.muonPFIsoSingleTypeMapProd.clone()
-muonDirPFIsoPhoton02.pfTypes = cms.untracked.vint32(4)
-muonDirPFIsoPhoton02.deltaR = 0.2
-muonDirPFIsoPhoton02.radial = True
+muonRadPFIsoPhoton02 = MyAnalysis.IsolationTools.muonPFIsoSingleType_cfi.muonPFIsoSingleTypeMapProd.clone()
+muonRadPFIsoPhoton02.pfTypes = cms.untracked.vint32(4)
+muonRadPFIsoPhoton02.deltaR = 0.2
+muonRadPFIsoPhoton02.radial = True
 
 
 ### DR=0.3 cone
 # Charged Hadron isolation
-muonDirPFIsoChHad03 = MyAnalysis.IsolationTools.muonPFIsoSingleType_cfi.muonPFIsoSingleTypeMapProd.clone()
-muonDirPFIsoChHad03.pfTypes = cms.untracked.vint32(1)
-muonDirPFIsoChHad03.deltaR = 0.3
-muonDirPFIsoChHad03.radial = True
+muonRadPFIsoChHad03 = MyAnalysis.IsolationTools.muonPFIsoSingleType_cfi.muonPFIsoSingleTypeMapProd.clone()
+muonRadPFIsoChHad03.pfTypes = cms.untracked.vint32(1)
+muonRadPFIsoChHad03.deltaR = 0.3
+muonRadPFIsoChHad03.radial = True
 
 # Neutral Hadron isolation
-muonDirPFIsoNHad03 = MyAnalysis.IsolationTools.muonPFIsoSingleType_cfi.muonPFIsoSingleTypeMapProd.clone()
-muonDirPFIsoNHad03.pfTypes = cms.untracked.vint32(5)
-muonDirPFIsoNHad03.deltaR = 0.3
-muonDirPFIsoNHad03.radial = True
+muonRadPFIsoNHad03 = MyAnalysis.IsolationTools.muonPFIsoSingleType_cfi.muonPFIsoSingleTypeMapProd.clone()
+muonRadPFIsoNHad03.pfTypes = cms.untracked.vint32(5)
+muonRadPFIsoNHad03.deltaR = 0.3
+muonRadPFIsoNHad03.radial = True
 
 # Photon isolation
-muonDirPFIsoPhoton03 = MyAnalysis.IsolationTools.muonPFIsoSingleType_cfi.muonPFIsoSingleTypeMapProd.clone()
-muonDirPFIsoPhoton03.pfTypes = cms.untracked.vint32(4)
-muonDirPFIsoPhoton03.deltaR = 0.3
-muonDirPFIsoPhoton03.radial = True
+muonRadPFIsoPhoton03 = MyAnalysis.IsolationTools.muonPFIsoSingleType_cfi.muonPFIsoSingleTypeMapProd.clone()
+muonRadPFIsoPhoton03.pfTypes = cms.untracked.vint32(4)
+muonRadPFIsoPhoton03.deltaR = 0.3
+muonRadPFIsoPhoton03.radial = True
 
 
 ### DR=0.4 cone
 # Charged Hadron isolation
-muonDirPFIsoChHad04 = MyAnalysis.IsolationTools.muonPFIsoSingleType_cfi.muonPFIsoSingleTypeMapProd.clone()
-muonDirPFIsoChHad04.pfTypes = cms.untracked.vint32(1)
-muonDirPFIsoChHad04.deltaR = 0.4
-muonDirPFIsoChHad04.radial = True
+muonRadPFIsoChHad04 = MyAnalysis.IsolationTools.muonPFIsoSingleType_cfi.muonPFIsoSingleTypeMapProd.clone()
+muonRadPFIsoChHad04.pfTypes = cms.untracked.vint32(1)
+muonRadPFIsoChHad04.deltaR = 0.4
+muonRadPFIsoChHad04.radial = True
 
 # Neutral Hadron isolation
-muonDirPFIsoNHad04 = MyAnalysis.IsolationTools.muonPFIsoSingleType_cfi.muonPFIsoSingleTypeMapProd.clone()
-muonDirPFIsoNHad04.pfTypes = cms.untracked.vint32(5)
-muonDirPFIsoNHad04.deltaR = 0.4
-muonDirPFIsoNHad04.radial = True
+muonRadPFIsoNHad04 = MyAnalysis.IsolationTools.muonPFIsoSingleType_cfi.muonPFIsoSingleTypeMapProd.clone()
+muonRadPFIsoNHad04.pfTypes = cms.untracked.vint32(5)
+muonRadPFIsoNHad04.deltaR = 0.4
+muonRadPFIsoNHad04.radial = True
 
 # Photon isolation
-muonDirPFIsoPhoton04 = MyAnalysis.IsolationTools.muonPFIsoSingleType_cfi.muonPFIsoSingleTypeMapProd.clone()
-muonDirPFIsoPhoton04.pfTypes = cms.untracked.vint32(4)
-muonDirPFIsoPhoton04.deltaR = 0.4
-muonDirPFIsoPhoton04.radial = True
+muonRadPFIsoPhoton04 = MyAnalysis.IsolationTools.muonPFIsoSingleType_cfi.muonPFIsoSingleTypeMapProd.clone()
+muonRadPFIsoPhoton04.pfTypes = cms.untracked.vint32(4)
+muonRadPFIsoPhoton04.deltaR = 0.4
+muonRadPFIsoPhoton04.radial = True
 
 
 ### DR=0.5 cone
 # Charged Hadron isolation
-muonDirPFIsoChHad05 = MyAnalysis.IsolationTools.muonPFIsoSingleType_cfi.muonPFIsoSingleTypeMapProd.clone()
-muonDirPFIsoChHad05.pfTypes = cms.untracked.vint32(1)
-muonDirPFIsoChHad05.deltaR = 0.5
-muonDirPFIsoChHad05.radial = True
+muonRadPFIsoChHad05 = MyAnalysis.IsolationTools.muonPFIsoSingleType_cfi.muonPFIsoSingleTypeMapProd.clone()
+muonRadPFIsoChHad05.pfTypes = cms.untracked.vint32(1)
+muonRadPFIsoChHad05.deltaR = 0.5
+muonRadPFIsoChHad05.radial = True
 
 # Neutral Hadron isolation
-muonDirPFIsoNHad05 = MyAnalysis.IsolationTools.muonPFIsoSingleType_cfi.muonPFIsoSingleTypeMapProd.clone()
-muonDirPFIsoNHad05.pfTypes = cms.untracked.vint32(5)
-muonDirPFIsoNHad05.deltaR = 0.5
-muonDirPFIsoNHad05.radial = True
+muonRadPFIsoNHad05 = MyAnalysis.IsolationTools.muonPFIsoSingleType_cfi.muonPFIsoSingleTypeMapProd.clone()
+muonRadPFIsoNHad05.pfTypes = cms.untracked.vint32(5)
+muonRadPFIsoNHad05.deltaR = 0.5
+muonRadPFIsoNHad05.radial = True
 
 # Photon isolation
-muonDirPFIsoPhoton05 = MyAnalysis.IsolationTools.muonPFIsoSingleType_cfi.muonPFIsoSingleTypeMapProd.clone()
-muonDirPFIsoPhoton05.pfTypes = cms.untracked.vint32(4)
-muonDirPFIsoPhoton05.deltaR = 0.5
-muonDirPFIsoPhoton05.radial = True
+muonRadPFIsoPhoton05 = MyAnalysis.IsolationTools.muonPFIsoSingleType_cfi.muonPFIsoSingleTypeMapProd.clone()
+muonRadPFIsoPhoton05.pfTypes = cms.untracked.vint32(4)
+muonRadPFIsoPhoton05.deltaR = 0.5
+muonRadPFIsoPhoton05.radial = True
 
 
 ### DR=0.6 cone
 # Charged Hadron isolation
-muonDirPFIsoChHad06 = MyAnalysis.IsolationTools.muonPFIsoSingleType_cfi.muonPFIsoSingleTypeMapProd.clone()
-muonDirPFIsoChHad06.pfTypes = cms.untracked.vint32(1)
-muonDirPFIsoChHad06.deltaR = 0.6
-muonDirPFIsoChHad06.radial = True
+muonRadPFIsoChHad06 = MyAnalysis.IsolationTools.muonPFIsoSingleType_cfi.muonPFIsoSingleTypeMapProd.clone()
+muonRadPFIsoChHad06.pfTypes = cms.untracked.vint32(1)
+muonRadPFIsoChHad06.deltaR = 0.6
+muonRadPFIsoChHad06.radial = True
 
 # Neutral Hadron isolation
-muonDirPFIsoNHad06 = MyAnalysis.IsolationTools.muonPFIsoSingleType_cfi.muonPFIsoSingleTypeMapProd.clone()
-muonDirPFIsoNHad06.pfTypes = cms.untracked.vint32(5)
-muonDirPFIsoNHad06.deltaR = 0.6
-muonDirPFIsoNHad06.radial = True
+muonRadPFIsoNHad06 = MyAnalysis.IsolationTools.muonPFIsoSingleType_cfi.muonPFIsoSingleTypeMapProd.clone()
+muonRadPFIsoNHad06.pfTypes = cms.untracked.vint32(5)
+muonRadPFIsoNHad06.deltaR = 0.6
+muonRadPFIsoNHad06.radial = True
 
 # Photon isolation
-muonDirPFIsoPhoton06 = MyAnalysis.IsolationTools.muonPFIsoSingleType_cfi.muonPFIsoSingleTypeMapProd.clone()
-muonDirPFIsoPhoton06.pfTypes = cms.untracked.vint32(4)
-muonDirPFIsoPhoton06.deltaR = 0.6
-muonDirPFIsoPhoton06.radial = True
+muonRadPFIsoPhoton06 = MyAnalysis.IsolationTools.muonPFIsoSingleType_cfi.muonPFIsoSingleTypeMapProd.clone()
+muonRadPFIsoPhoton06.pfTypes = cms.untracked.vint32(4)
+muonRadPFIsoPhoton06.deltaR = 0.6
+muonRadPFIsoPhoton06.radial = True
 
 
 ### DR=0.7 cone
 # Charged Hadron isolation
-muonDirPFIsoChHad07 = MyAnalysis.IsolationTools.muonPFIsoSingleType_cfi.muonPFIsoSingleTypeMapProd.clone()
-muonDirPFIsoChHad07.pfTypes = cms.untracked.vint32(1)
-muonDirPFIsoChHad07.deltaR = 0.7
-muonDirPFIsoChHad07.radial = True
+muonRadPFIsoChHad07 = MyAnalysis.IsolationTools.muonPFIsoSingleType_cfi.muonPFIsoSingleTypeMapProd.clone()
+muonRadPFIsoChHad07.pfTypes = cms.untracked.vint32(1)
+muonRadPFIsoChHad07.deltaR = 0.7
+muonRadPFIsoChHad07.radial = True
 
 # Neutral Hadron isolation
-muonDirPFIsoNHad07 = MyAnalysis.IsolationTools.muonPFIsoSingleType_cfi.muonPFIsoSingleTypeMapProd.clone()
-muonDirPFIsoNHad07.pfTypes = cms.untracked.vint32(5)
-muonDirPFIsoNHad07.deltaR = 0.7
-muonDirPFIsoNHad07.radial = True
+muonRadPFIsoNHad07 = MyAnalysis.IsolationTools.muonPFIsoSingleType_cfi.muonPFIsoSingleTypeMapProd.clone()
+muonRadPFIsoNHad07.pfTypes = cms.untracked.vint32(5)
+muonRadPFIsoNHad07.deltaR = 0.7
+muonRadPFIsoNHad07.radial = True
 
 # Photon isolation
-muonDirPFIsoPhoton07 = MyAnalysis.IsolationTools.muonPFIsoSingleType_cfi.muonPFIsoSingleTypeMapProd.clone()
-muonDirPFIsoPhoton07.pfTypes = cms.untracked.vint32(4)
-muonDirPFIsoPhoton07.deltaR = 0.7
-muonDirPFIsoPhoton07.radial = True
+muonRadPFIsoPhoton07 = MyAnalysis.IsolationTools.muonPFIsoSingleType_cfi.muonPFIsoSingleTypeMapProd.clone()
+muonRadPFIsoPhoton07.pfTypes = cms.untracked.vint32(4)
+muonRadPFIsoPhoton07.deltaR = 0.7
+muonRadPFIsoPhoton07.radial = True
 
 
 

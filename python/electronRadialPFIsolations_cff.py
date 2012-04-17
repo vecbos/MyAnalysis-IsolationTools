@@ -3,142 +3,142 @@ import MyAnalysis.IsolationTools.electronPFIsoSingleType_cfi
 
 ### DR=0.1 cone
 # Charged Hadron isolation
-electronDirPFIsoChHad01 = MyAnalysis.IsolationTools.electronPFIsoSingleType_cfi.electronPFIsoSingleTypeMapProd.clone()
-electronDirPFIsoChHad01.pfTypes = cms.untracked.vint32(1)
-electronDirPFIsoChHad01.deltaR = 0.1
-electronDirPFIsoChHad01.radial = True
+electronRadPFIsoChHad01 = MyAnalysis.IsolationTools.electronPFIsoSingleType_cfi.electronPFIsoSingleTypeMapProd.clone()
+electronRadPFIsoChHad01.pfTypes = cms.untracked.vint32(1)
+electronRadPFIsoChHad01.deltaR = 0.1
+electronRadPFIsoChHad01.radial = True
 
 # Neutral Hadron isolation
-electronDirPFIsoNHad01 = MyAnalysis.IsolationTools.electronPFIsoSingleType_cfi.electronPFIsoSingleTypeMapProd.clone()
-electronDirPFIsoNHad01.pfTypes = cms.untracked.vint32(5)
-electronDirPFIsoNHad01.deltaR = 0.1
-electronDirPFIsoNHad01.radial = True
+electronRadPFIsoNHad01 = MyAnalysis.IsolationTools.electronPFIsoSingleType_cfi.electronPFIsoSingleTypeMapProd.clone()
+electronRadPFIsoNHad01.pfTypes = cms.untracked.vint32(5)
+electronRadPFIsoNHad01.deltaR = 0.1
+electronRadPFIsoNHad01.radial = True
 
 # Photon isolation
-electronDirPFIsoPhoton01 = MyAnalysis.IsolationTools.electronPFIsoSingleType_cfi.electronPFIsoSingleTypeMapProd.clone()
-electronDirPFIsoPhoton01.pfTypes = cms.untracked.vint32(4)
-electronDirPFIsoPhoton01.deltaR = 0.1
-electronDirPFIsoPhoton01.radial = True
+electronRadPFIsoPhoton01 = MyAnalysis.IsolationTools.electronPFIsoSingleType_cfi.electronPFIsoSingleTypeMapProd.clone()
+electronRadPFIsoPhoton01.pfTypes = cms.untracked.vint32(4)
+electronRadPFIsoPhoton01.deltaR = 0.1
+electronRadPFIsoPhoton01.radial = True
 
 
 ### DR=0.2 cone
 # Charged Hadron isolation
-electronDirPFIsoChHad02 = MyAnalysis.IsolationTools.electronPFIsoSingleType_cfi.electronPFIsoSingleTypeMapProd.clone()
-electronDirPFIsoChHad02.pfTypes = cms.untracked.vint32(1)
-electronDirPFIsoChHad02.deltaR = 0.2
-electronDirPFIsoChHad02.radial = True
+electronRadPFIsoChHad02 = MyAnalysis.IsolationTools.electronPFIsoSingleType_cfi.electronPFIsoSingleTypeMapProd.clone()
+electronRadPFIsoChHad02.pfTypes = cms.untracked.vint32(1)
+electronRadPFIsoChHad02.deltaR = 0.2
+electronRadPFIsoChHad02.radial = True
 
 # Neutral Hadron isolation
-electronDirPFIsoNHad02 = MyAnalysis.IsolationTools.electronPFIsoSingleType_cfi.electronPFIsoSingleTypeMapProd.clone()
-electronDirPFIsoNHad02.pfTypes = cms.untracked.vint32(5)
-electronDirPFIsoNHad02.deltaR = 0.2
-electronDirPFIsoNHad02.radial = True
+electronRadPFIsoNHad02 = MyAnalysis.IsolationTools.electronPFIsoSingleType_cfi.electronPFIsoSingleTypeMapProd.clone()
+electronRadPFIsoNHad02.pfTypes = cms.untracked.vint32(5)
+electronRadPFIsoNHad02.deltaR = 0.2
+electronRadPFIsoNHad02.radial = True
 
 # Photon isolation
-electronDirPFIsoPhoton02 = MyAnalysis.IsolationTools.electronPFIsoSingleType_cfi.electronPFIsoSingleTypeMapProd.clone()
-electronDirPFIsoPhoton02.pfTypes = cms.untracked.vint32(4)
-electronDirPFIsoPhoton02.deltaR = 0.2
-electronDirPFIsoPhoton02.radial = True
+electronRadPFIsoPhoton02 = MyAnalysis.IsolationTools.electronPFIsoSingleType_cfi.electronPFIsoSingleTypeMapProd.clone()
+electronRadPFIsoPhoton02.pfTypes = cms.untracked.vint32(4)
+electronRadPFIsoPhoton02.deltaR = 0.2
+electronRadPFIsoPhoton02.radial = True
 
 
 ### DR=0.3 cone
 # Charged Hadron isolation
-electronDirPFIsoChHad03 = MyAnalysis.IsolationTools.electronPFIsoSingleType_cfi.electronPFIsoSingleTypeMapProd.clone()
-electronDirPFIsoChHad03.pfTypes = cms.untracked.vint32(1)
-electronDirPFIsoChHad03.deltaR = 0.3
-electronDirPFIsoChHad03.radial = True
+electronRadPFIsoChHad03 = MyAnalysis.IsolationTools.electronPFIsoSingleType_cfi.electronPFIsoSingleTypeMapProd.clone()
+electronRadPFIsoChHad03.pfTypes = cms.untracked.vint32(1)
+electronRadPFIsoChHad03.deltaR = 0.3
+electronRadPFIsoChHad03.radial = True
 
 # Neutral Hadron isolation
-electronDirPFIsoNHad03 = MyAnalysis.IsolationTools.electronPFIsoSingleType_cfi.electronPFIsoSingleTypeMapProd.clone()
-electronDirPFIsoNHad03.pfTypes = cms.untracked.vint32(5)
-electronDirPFIsoNHad03.deltaR = 0.3
-electronDirPFIsoNHad03.radial = True
+electronRadPFIsoNHad03 = MyAnalysis.IsolationTools.electronPFIsoSingleType_cfi.electronPFIsoSingleTypeMapProd.clone()
+electronRadPFIsoNHad03.pfTypes = cms.untracked.vint32(5)
+electronRadPFIsoNHad03.deltaR = 0.3
+electronRadPFIsoNHad03.radial = True
 
 # Photon isolation
-electronDirPFIsoPhoton03 = MyAnalysis.IsolationTools.electronPFIsoSingleType_cfi.electronPFIsoSingleTypeMapProd.clone()
-electronDirPFIsoPhoton03.pfTypes = cms.untracked.vint32(4)
-electronDirPFIsoPhoton03.deltaR = 0.3
-electronDirPFIsoPhoton03.radial = True
+electronRadPFIsoPhoton03 = MyAnalysis.IsolationTools.electronPFIsoSingleType_cfi.electronPFIsoSingleTypeMapProd.clone()
+electronRadPFIsoPhoton03.pfTypes = cms.untracked.vint32(4)
+electronRadPFIsoPhoton03.deltaR = 0.3
+electronRadPFIsoPhoton03.radial = True
 
 
 ### DR=0.4 cone
 # Charged Hadron isolation
-electronDirPFIsoChHad04 = MyAnalysis.IsolationTools.electronPFIsoSingleType_cfi.electronPFIsoSingleTypeMapProd.clone()
-electronDirPFIsoChHad04.pfTypes = cms.untracked.vint32(1)
-electronDirPFIsoChHad04.deltaR = 0.4
-electronDirPFIsoChHad04.radial = True
+electronRadPFIsoChHad04 = MyAnalysis.IsolationTools.electronPFIsoSingleType_cfi.electronPFIsoSingleTypeMapProd.clone()
+electronRadPFIsoChHad04.pfTypes = cms.untracked.vint32(1)
+electronRadPFIsoChHad04.deltaR = 0.4
+electronRadPFIsoChHad04.radial = True
 
 # Neutral Hadron isolation
-electronDirPFIsoNHad04 = MyAnalysis.IsolationTools.electronPFIsoSingleType_cfi.electronPFIsoSingleTypeMapProd.clone()
-electronDirPFIsoNHad04.pfTypes = cms.untracked.vint32(5)
-electronDirPFIsoNHad04.deltaR = 0.4
-electronDirPFIsoNHad04.radial = True
+electronRadPFIsoNHad04 = MyAnalysis.IsolationTools.electronPFIsoSingleType_cfi.electronPFIsoSingleTypeMapProd.clone()
+electronRadPFIsoNHad04.pfTypes = cms.untracked.vint32(5)
+electronRadPFIsoNHad04.deltaR = 0.4
+electronRadPFIsoNHad04.radial = True
 
 # Photon isolation
-electronDirPFIsoPhoton04 = MyAnalysis.IsolationTools.electronPFIsoSingleType_cfi.electronPFIsoSingleTypeMapProd.clone()
-electronDirPFIsoPhoton04.pfTypes = cms.untracked.vint32(4)
-electronDirPFIsoPhoton04.deltaR = 0.4
-electronDirPFIsoPhoton04.radial = True
+electronRadPFIsoPhoton04 = MyAnalysis.IsolationTools.electronPFIsoSingleType_cfi.electronPFIsoSingleTypeMapProd.clone()
+electronRadPFIsoPhoton04.pfTypes = cms.untracked.vint32(4)
+electronRadPFIsoPhoton04.deltaR = 0.4
+electronRadPFIsoPhoton04.radial = True
 
 
 ### DR=0.5 cone
 # Charged Hadron isolation
-electronDirPFIsoChHad05 = MyAnalysis.IsolationTools.electronPFIsoSingleType_cfi.electronPFIsoSingleTypeMapProd.clone()
-electronDirPFIsoChHad05.pfTypes = cms.untracked.vint32(1)
-electronDirPFIsoChHad05.deltaR = 0.5
-electronDirPFIsoChHad05.radial = True
+electronRadPFIsoChHad05 = MyAnalysis.IsolationTools.electronPFIsoSingleType_cfi.electronPFIsoSingleTypeMapProd.clone()
+electronRadPFIsoChHad05.pfTypes = cms.untracked.vint32(1)
+electronRadPFIsoChHad05.deltaR = 0.5
+electronRadPFIsoChHad05.radial = True
 
 # Neutral Hadron isolation
-electronDirPFIsoNHad05 = MyAnalysis.IsolationTools.electronPFIsoSingleType_cfi.electronPFIsoSingleTypeMapProd.clone()
-electronDirPFIsoNHad05.pfTypes = cms.untracked.vint32(5)
-electronDirPFIsoNHad05.deltaR = 0.5
-electronDirPFIsoNHad05.radial = True
+electronRadPFIsoNHad05 = MyAnalysis.IsolationTools.electronPFIsoSingleType_cfi.electronPFIsoSingleTypeMapProd.clone()
+electronRadPFIsoNHad05.pfTypes = cms.untracked.vint32(5)
+electronRadPFIsoNHad05.deltaR = 0.5
+electronRadPFIsoNHad05.radial = True
 
 # Photon isolation
-electronDirPFIsoPhoton05 = MyAnalysis.IsolationTools.electronPFIsoSingleType_cfi.electronPFIsoSingleTypeMapProd.clone()
-electronDirPFIsoPhoton05.pfTypes = cms.untracked.vint32(4)
-electronDirPFIsoPhoton05.deltaR = 0.5
-electronDirPFIsoPhoton05.radial = True
+electronRadPFIsoPhoton05 = MyAnalysis.IsolationTools.electronPFIsoSingleType_cfi.electronPFIsoSingleTypeMapProd.clone()
+electronRadPFIsoPhoton05.pfTypes = cms.untracked.vint32(4)
+electronRadPFIsoPhoton05.deltaR = 0.5
+electronRadPFIsoPhoton05.radial = True
 
 
 ### DR=0.6 cone
 # Charged Hadron isolation
-electronDirPFIsoChHad06 = MyAnalysis.IsolationTools.electronPFIsoSingleType_cfi.electronPFIsoSingleTypeMapProd.clone()
-electronDirPFIsoChHad06.pfTypes = cms.untracked.vint32(1)
-electronDirPFIsoChHad06.deltaR = 0.6
-electronDirPFIsoChHad06.radial = True
+electronRadPFIsoChHad06 = MyAnalysis.IsolationTools.electronPFIsoSingleType_cfi.electronPFIsoSingleTypeMapProd.clone()
+electronRadPFIsoChHad06.pfTypes = cms.untracked.vint32(1)
+electronRadPFIsoChHad06.deltaR = 0.6
+electronRadPFIsoChHad06.radial = True
 
 # Neutral Hadron isolation
-electronDirPFIsoNHad06 = MyAnalysis.IsolationTools.electronPFIsoSingleType_cfi.electronPFIsoSingleTypeMapProd.clone()
-electronDirPFIsoNHad06.pfTypes = cms.untracked.vint32(5)
-electronDirPFIsoNHad06.deltaR = 0.6
-electronDirPFIsoNHad06.radial = True
+electronRadPFIsoNHad06 = MyAnalysis.IsolationTools.electronPFIsoSingleType_cfi.electronPFIsoSingleTypeMapProd.clone()
+electronRadPFIsoNHad06.pfTypes = cms.untracked.vint32(5)
+electronRadPFIsoNHad06.deltaR = 0.6
+electronRadPFIsoNHad06.radial = True
 
 # Photon isolation
-electronDirPFIsoPhoton06 = MyAnalysis.IsolationTools.electronPFIsoSingleType_cfi.electronPFIsoSingleTypeMapProd.clone()
-electronDirPFIsoPhoton06.pfTypes = cms.untracked.vint32(4)
-electronDirPFIsoPhoton06.deltaR = 0.6
-electronDirPFIsoPhoton06.radial = True
+electronRadPFIsoPhoton06 = MyAnalysis.IsolationTools.electronPFIsoSingleType_cfi.electronPFIsoSingleTypeMapProd.clone()
+electronRadPFIsoPhoton06.pfTypes = cms.untracked.vint32(4)
+electronRadPFIsoPhoton06.deltaR = 0.6
+electronRadPFIsoPhoton06.radial = True
 
 
 ### DR=0.7 cone
 # Charged Hadron isolation
-electronDirPFIsoChHad07 = MyAnalysis.IsolationTools.electronPFIsoSingleType_cfi.electronPFIsoSingleTypeMapProd.clone()
-electronDirPFIsoChHad07.pfTypes = cms.untracked.vint32(1)
-electronDirPFIsoChHad07.deltaR = 0.7
-electronDirPFIsoChHad07.radial = True
+electronRadPFIsoChHad07 = MyAnalysis.IsolationTools.electronPFIsoSingleType_cfi.electronPFIsoSingleTypeMapProd.clone()
+electronRadPFIsoChHad07.pfTypes = cms.untracked.vint32(1)
+electronRadPFIsoChHad07.deltaR = 0.7
+electronRadPFIsoChHad07.radial = True
 
 # Neutral Hadron isolation
-electronDirPFIsoNHad07 = MyAnalysis.IsolationTools.electronPFIsoSingleType_cfi.electronPFIsoSingleTypeMapProd.clone()
-electronDirPFIsoNHad07.pfTypes = cms.untracked.vint32(5)
-electronDirPFIsoNHad07.deltaR = 0.7
-electronDirPFIsoNHad07.radial = True
+electronRadPFIsoNHad07 = MyAnalysis.IsolationTools.electronPFIsoSingleType_cfi.electronPFIsoSingleTypeMapProd.clone()
+electronRadPFIsoNHad07.pfTypes = cms.untracked.vint32(5)
+electronRadPFIsoNHad07.deltaR = 0.7
+electronRadPFIsoNHad07.radial = True
 
 # Photon isolation
-electronDirPFIsoPhoton07 = MyAnalysis.IsolationTools.electronPFIsoSingleType_cfi.electronPFIsoSingleTypeMapProd.clone()
-electronDirPFIsoPhoton07.pfTypes = cms.untracked.vint32(4)
-electronDirPFIsoPhoton07.deltaR = 0.7
-electronDirPFIsoPhoton07.radial = True
+electronRadPFIsoPhoton07 = MyAnalysis.IsolationTools.electronPFIsoSingleType_cfi.electronPFIsoSingleTypeMapProd.clone()
+electronRadPFIsoPhoton07.pfTypes = cms.untracked.vint32(4)
+electronRadPFIsoPhoton07.deltaR = 0.7
+electronRadPFIsoPhoton07.radial = True
 
 
 
