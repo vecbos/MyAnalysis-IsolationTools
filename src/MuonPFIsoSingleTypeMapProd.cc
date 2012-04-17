@@ -38,6 +38,7 @@ private:
   std::vector<int> pfTypes_;
   double deltaR_;
   double directional_;
+  double radial_;
 
 };
 
@@ -49,7 +50,8 @@ MuonPFIsoSingleTypeMapProd::MuonPFIsoSingleTypeMapProd(const edm::ParameterSet& 
   pfLabel_(iConfig.getUntrackedParameter<edm::InputTag>("pfLabel")),
   pfTypes_(iConfig.getUntrackedParameter<std::vector<int> >("pfTypes")),
   deltaR_(iConfig.getUntrackedParameter<double>("deltaR")),
-  directional_(iConfig.getUntrackedParameter<bool>("directional")) {
+  directional_(iConfig.getUntrackedParameter<bool>("directional")),
+  radial_(iConfig.getUntrackedParameter<bool>("radial")) {
 
   produces<edm::ValueMap<float> >().setBranchAlias("pfMuIso");
 }
@@ -76,6 +78,7 @@ void MuonPFIsoSingleTypeMapProd::produce(edm::Event& iEvent, const edm::EventSet
     if(mu.track().isNonnull()) zLepton = mu.track()->dz(vtxH->at(0).position());
 
     Double_t ptSum =0.;  
+    Double_t ptSum_radial =0.;  
     math::XYZVector isoAngleSum;
     std::vector<math::XYZVector> coneParticles;
 
@@ -135,16 +138,27 @@ void MuonPFIsoSingleTypeMapProd::produce(edm::Event& iEvent, const edm::EventSet
           isoAngleSum += transverse;
           coneParticles.push_back(transverse);
         }
-      }
 
-    }
+        
+        // for radial isolation:
+        ptSum_radial += pf.pt() * ( 1. - 10.*dr*deltaR_ );
+
+
+      } // if deltaR
+
+    } // for pf candidates
+
     if (directional_) {
       double directionalPT = 0;
       for (unsigned int iPtcl = 0; iPtcl < coneParticles.size(); ++iPtcl)
         directionalPT += pow(TMath::ACos( coneParticles[iPtcl].Dot(isoAngleSum) / coneParticles[iPtcl].rho() / isoAngleSum.rho() ),2) * coneParticles[iPtcl].rho();
       isoV.push_back(directionalPT);
+    } else if( radial_ ) {
+      isoV.push_back( ptSum_radial );
     } else isoV.push_back(ptSum);
-  }
+
+
+  } // for muons
 
   isoF.insert(muH,isoV.begin(),isoV.end());
 
