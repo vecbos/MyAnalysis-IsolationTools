@@ -35,6 +35,7 @@ private:
   edm::InputTag pfLabel_;
   std::vector<int> pfTypes_;
   double deltaR_;
+  double neutralThreshold_;
   bool directional_;
   bool radial_;
 
@@ -48,6 +49,7 @@ ElectronPFIsoSingleTypeMapProd::ElectronPFIsoSingleTypeMapProd(const edm::Parame
   pfLabel_(iConfig.getUntrackedParameter<edm::InputTag>("pfLabel")),
   pfTypes_(iConfig.getUntrackedParameter<std::vector<int> >("pfTypes")),
   deltaR_(iConfig.getUntrackedParameter<double>("deltaR")),
+  neutralThreshold_(iConfig.getUntrackedParameter<double>("neutralThreshold")),
   directional_(iConfig.getUntrackedParameter<bool>("directional")),
   radial_(iConfig.getUntrackedParameter<bool>("radial")) {
 
@@ -103,7 +105,7 @@ void ElectronPFIsoSingleTypeMapProd::produce(edm::Event& iEvent, const edm::Even
 
 
       // pt cut applied to neutrals
-      // if(!pf.trackRef().isNonnull() && pf.pt() <= 1.0) continue;
+      if(!pf.trackRef().isNonnull() && pf.pt() < neutralThreshold_) continue;
 
       // ignore the pf candidate if it is too far away in Z
       //       Double_t deltaZ = 0.0;
