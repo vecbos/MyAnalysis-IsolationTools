@@ -95,13 +95,13 @@ void ElectronPFIsoSingleTypeMapProd::produce(edm::Event& iEvent, const edm::Even
       }
       if(skip) continue;
 
-      // exclude electron
-      if(pf.trackRef().isNonnull() && ele.closestCtfTrackRef().isNonnull() &&
-         pf.trackRef() == ele.closestCtfTrackRef()) continue;
+      // exclude electron // this would be good, but for synch with smurfs removed
+      //       if(pf.trackRef().isNonnull() && ele.closestCtfTrackRef().isNonnull() &&
+      //          pf.trackRef() == ele.closestCtfTrackRef()) continue;
 
       // exclude electron
-      if(pf.gsfTrackRef().isNonnull() && ele.gsfTrack().isNonnull() &&
-         pf.gsfTrackRef() == ele.gsfTrack()) continue;
+      //       if(pf.gsfTrackRef().isNonnull() && ele.gsfTrack().isNonnull() &&
+      //          pf.gsfTrackRef() == ele.gsfTrack()) continue;
 
 
       // pt cut applied to neutrals
@@ -139,8 +139,8 @@ void ElectronPFIsoSingleTypeMapProd::produce(edm::Event& iEvent, const edm::Even
            && ROOT::Math::VectorUtil::DeltaR(ele.momentum(), pf.momentum()) < 0.015) continue; 
 
         // neutral hadron: no-one in EB, InnerCone (One Tower = dR < 0.07) Veto for non-gamma neutrals
-        if (!pf.trackRef().isNonnull() && pf.particleId() == reco::PFCandidate::h0 && fabs(ele.superCluster()->eta())>1.479 
-            && ROOT::Math::VectorUtil::DeltaR(ele.momentum(), pf.momentum()) < 0.07 ) continue; 
+        // if (!pf.trackRef().isNonnull() && pf.particleId() == reco::PFCandidate::h0 && fabs(ele.superCluster()->eta())>1.479 
+        //      && ROOT::Math::VectorUtil::DeltaR(ele.momentum(), pf.momentum()) < 0.07 ) continue; 
         
         // scalar sum
         ptSum += pf.pt();            
