@@ -62,7 +62,8 @@ void ElectronPFIsoSingleTypeMapProd::produce(edm::Event& iEvent, const edm::Even
   edm::Handle<reco::GsfElectronCollection> eleH;
   iEvent.getByLabel(eleLabel_,eleH);
 
-  edm::Handle<reco::PFCandidateCollection> pfH;
+  //  edm::Handle<reco::PFCandidateCollection> pfH;
+  edm::Handle< std::vector< edm::FwdPtr<reco::PFCandidate> > > pfH;
   iEvent.getByLabel(pfLabel_,pfH);
 
   edm::Handle<reco::VertexCollection> vtxH;
@@ -75,8 +76,8 @@ void ElectronPFIsoSingleTypeMapProd::produce(edm::Event& iEvent, const edm::Even
   for(size_t i=0; i<eleH->size();++i) {
     const reco::GsfElectron &ele = eleH->at(i);
 
-    Double_t zLepton = 0.0;
-    if(ele.track().isNonnull()) zLepton = ele.track()->dz(vtxH->at(0).position());
+//     Double_t zLepton = 0.0;
+//     if(ele.track().isNonnull()) zLepton = ele.track()->dz(vtxH->at(0).position());
 
     Double_t ptSum =0.;  
     Double_t ptSum_radial =0.;  
@@ -84,12 +85,12 @@ void ElectronPFIsoSingleTypeMapProd::produce(edm::Event& iEvent, const edm::Even
     std::vector<math::XYZVector> coneParticles;
 
     for (size_t j=0; j<pfH->size();j++) {   
-      const reco::PFCandidate &pf = pfH->at(j);
+      const edm::FwdPtr<reco::PFCandidate> &pf = pfH->at(j);
 
       // consider only the types requested
       bool skip=true;
       for(size_t t=0; t<pfTypes_.size(); t++) {
-        if(pf.particleId() == pfTypes_[t]) {
+        if(pf->particleId() == pfTypes_[t]) {
           skip=false;
           break;
         }
@@ -97,33 +98,33 @@ void ElectronPFIsoSingleTypeMapProd::produce(edm::Event& iEvent, const edm::Even
       if(skip) continue;
 
       // exclude electron // this would be good, but for synch with smurfs removed
-      //       if(pf.trackRef().isNonnull() && ele.closestCtfTrackRef().isNonnull() &&
-      //          pf.trackRef() == ele.closestCtfTrackRef()) continue;
+      //       if(pf->trackRef().isNonnull() && ele.closestCtfTrackRef().isNonnull() &&
+      //          pf->trackRef() == ele.closestCtfTrackRef()) continue;
 
       // exclude electron
-      //       if(pf.gsfTrackRef().isNonnull() && ele.gsfTrack().isNonnull() &&
-      //          pf.gsfTrackRef() == ele.gsfTrack()) continue;
+      //       if(pf->gsfTrackRef().isNonnull() && ele.gsfTrack().isNonnull() &&
+      //          pf->gsfTrackRef() == ele.gsfTrack()) continue;
 
 
       // pt cut applied to neutrals
-      if(!pf.trackRef().isNonnull() && pf.pt() < neutralThreshold_) continue;
+      if(!pf->trackRef().isNonnull() && pf->pt() < neutralThreshold_) continue;
 
       // ignore the pf candidate if it is too far away in Z
       //       Double_t deltaZ = 0.0;
-      //       if(pf.trackRef().isNonnull()) {
-      //         deltaZ = fabs(pf.trackRef()->dz(vtxH->at(0).position()) - zLepton);
+      //       if(pf->trackRef().isNonnull()) {
+      //         deltaZ = fabs(pf->trackRef()->dz(vtxH->at(0).position()) - zLepton);
       //       }
       //       if (deltaZ >= 0.1) continue;
 
 
-      Double_t dr = ROOT::Math::VectorUtil::DeltaR(ele.momentum(), pf.momentum());
+      Double_t dr = ROOT::Math::VectorUtil::DeltaR(ele.momentum(), pf->momentum());
       // add the pf pt if it is inside the extRadius and outside the intRadius
       if ( dr < deltaR_ && dr >= 0.0 ) {
 
         // remove the eventual duplicates in pf-reco if the pfcand does not make a jpsi with ele
-//         if (pf.particleId() == reco::PFCandidate::e) {
+//         if (pf->particleId() == reco::PFCandidate::e) {
 //           math::XYZTLorentzVector eleP4 = ele.p4();
-//           math::XYZTLorentzVector pfP4 = pf.p4();
+//           math::XYZTLorentzVector pfP4 = pf->p4();
 //           float invmass = (eleP4 + pfP4).mass();
 //           if(invmass<2.5 || invmass>3.6) continue;
 //         }
@@ -132,30 +133,30 @@ void ElectronPFIsoSingleTypeMapProd::produce(edm::Event& iEvent, const edm::Even
         // https://indico.cern.ch/getFile.py/access?contribId=0&resId=0&materialId=slides&confId=154207
 
         // supercluster veto on electrons failing missing hits cut
-        if (ele.gsfTrack()->trackerExpectedHitsInner().numberOfHits()>0 && pf.mva_nothing_gamma() > 0.99 && 
-            ele.superCluster().isNonnull() && pf.superClusterRef().isNonnull() && 
-            ele.superCluster() == pf.superClusterRef()) continue;
+        if (ele.gsfTrack()->trackerExpectedHitsInner().numberOfHits()>0 && pf->mva_nothing_gamma() > 0.99 && 
+            ele.superCluster().isNonnull() && pf->superClusterRef().isNonnull() && 
+            ele.superCluster() == pf->superClusterRef()) continue;
 
         // dR Veto for Gamma: no-one in EB, dR > 0.08 in EE
-        if (pf.particleId() == reco::PFCandidate::gamma && fabs(ele.superCluster()->eta())>1.479 
-            && ROOT::Math::VectorUtil::DeltaR(ele.momentum(), pf.momentum()) < 0.08) continue;
+        if (pf->particleId() == reco::PFCandidate::gamma && fabs(ele.superCluster()->eta())>1.479 
+            && ROOT::Math::VectorUtil::DeltaR(ele.momentum(), pf->momentum()) < 0.08) continue;
         
         // charged hadron: no-one in EB, dR > 0.015 in EE
-        if(pf.trackRef().isNonnull() && fabs(ele.superCluster()->eta())>1.479
-           && ROOT::Math::VectorUtil::DeltaR(ele.momentum(), pf.momentum()) < 0.015) continue; 
+        if(pf->trackRef().isNonnull() && fabs(ele.superCluster()->eta())>1.479
+           && ROOT::Math::VectorUtil::DeltaR(ele.momentum(), pf->momentum()) < 0.015) continue; 
 
         // neutral hadron: no-one in EB, InnerCone (One Tower = dR < 0.07) Veto for non-gamma neutrals
-        // if (!pf.trackRef().isNonnull() && pf.particleId() == reco::PFCandidate::h0 && fabs(ele.superCluster()->eta())>1.479 
-        //      && ROOT::Math::VectorUtil::DeltaR(ele.momentum(), pf.momentum()) < 0.07 ) continue; 
+        // if (!pf->trackRef().isNonnull() && pf->particleId() == reco::PFCandidate::h0 && fabs(ele.superCluster()->eta())>1.479 
+        //      && ROOT::Math::VectorUtil::DeltaR(ele.momentum(), pf->momentum()) < 0.07 ) continue; 
         
         // scalar sum
-        ptSum += pf.pt();            
+        ptSum += pf->pt();            
         
         // directional sum
-        math::XYZVector transverse( pf.eta() - ele.eta()
-                                    , reco::deltaPhi(pf.phi(), ele.phi())
+        math::XYZVector transverse( pf->eta() - ele.eta()
+                                    , reco::deltaPhi(pf->phi(), ele.phi())
                                     , 0);
-        transverse *= pf.pt() / transverse.rho();
+        transverse *= pf->pt() / transverse.rho();
         if (transverse.rho() > 0) {
           isoAngleSum += transverse;
           coneParticles.push_back(transverse);
@@ -163,7 +164,7 @@ void ElectronPFIsoSingleTypeMapProd::produce(edm::Event& iEvent, const edm::Even
 
         
         // for radial isolation:
-        ptSum_radial += pf.pt() * ( 1. - 10.*dr*deltaR_ );
+        ptSum_radial += pf->pt() * ( 1. - 10.*dr*deltaR_ );
 
 
       } //if deltaR

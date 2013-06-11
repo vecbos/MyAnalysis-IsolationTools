@@ -63,7 +63,8 @@ void MuonPFIsoSingleTypeMapProd::produce(edm::Event& iEvent, const edm::EventSet
   edm::Handle<reco::MuonCollection> muH;
   iEvent.getByLabel(muonLabel_,muH);
 
-  edm::Handle<reco::PFCandidateCollection> pfH;
+  //  edm::Handle<reco::PFCandidateCollection> pfH;
+  edm::Handle< std::vector< edm::FwdPtr<reco::PFCandidate> > > pfH;
   iEvent.getByLabel(pfLabel_,pfH);
 
   edm::Handle<reco::VertexCollection> vtxH;
@@ -76,8 +77,8 @@ void MuonPFIsoSingleTypeMapProd::produce(edm::Event& iEvent, const edm::EventSet
   for(size_t i=0; i<muH->size();++i) {
     const reco::Muon &mu = muH->at(i);
 
-    Double_t zLepton = 0.0;
-    if(mu.track().isNonnull()) zLepton = mu.track()->dz(vtxH->at(0).position());
+//     Double_t zLepton = 0.0;
+//     if(mu.track().isNonnull()) zLepton = mu.track()->dz(vtxH->at(0).position());
 
     Double_t ptSum =0.;  
     Double_t ptSum_radial =0.;  
@@ -85,12 +86,12 @@ void MuonPFIsoSingleTypeMapProd::produce(edm::Event& iEvent, const edm::EventSet
     std::vector<math::XYZVector> coneParticles;
 
     for (size_t j=0; j<pfH->size();j++) {   
-      const reco::PFCandidate &pf = pfH->at(j);
+      const edm::FwdPtr<reco::PFCandidate> &pf = pfH->at(j);
             
       // consider only the types requested
       bool skip=true;
       for(size_t t=0; t<pfTypes_.size(); t++) {
-        if(pf.particleId() == pfTypes_[t]) {
+        if(pf->particleId() == pfTypes_[t]) {
           skip=false;
           break;
         }
@@ -98,44 +99,44 @@ void MuonPFIsoSingleTypeMapProd::produce(edm::Event& iEvent, const edm::EventSet
       if(skip) continue;
 
       // exclude muon
-      if(pf.trackRef().isNonnull() && mu.track().isNonnull() &&
-         pf.trackRef() == mu.track()) continue;
+      if(pf->trackRef().isNonnull() && mu.track().isNonnull() &&
+         pf->trackRef() == mu.track()) continue;
 
 
       // pt cut applied to neutrals
-      if(!pf.trackRef().isNonnull() && pf.pt() < neutralThreshold_) continue;
+      if(!pf->trackRef().isNonnull() && pf->pt() < neutralThreshold_) continue;
             
       // ignore the pf candidate if it is too far away in Z
       //             Double_t deltaZ = 0.0;
-      //             if(pf.trackRef().isNonnull()) {
-      //                 deltaZ = fabs(pf.trackRef()->dz(vtxH->at(0).position()) - zLepton);
+      //             if(pf->trackRef().isNonnull()) {
+      //                 deltaZ = fabs(pf->trackRef()->dz(vtxH->at(0).position()) - zLepton);
       //             }
       //             if (deltaZ >= 0.1) continue;
             
       // remove the eventual duplicates in pf-reco if the pfcand does not make a jpsi with ele
-//       if (pf.particleId() == reco::PFCandidate::mu) {
+//       if (pf->particleId() == reco::PFCandidate::mu) {
 //         math::XYZTLorentzVector muP4 = mu.p4();
-//         math::XYZTLorentzVector pfP4 = pf.p4();
+//         math::XYZTLorentzVector pfP4 = pf->p4();
 //         float invmass = (muP4 + pfP4).mass();
 //         if(invmass<2.5 || invmass>3.6) continue;
 //       }
 
       // dR Veto for Gamma: no-one in EB, dR > 0.08 in EE
-      Double_t dr = ROOT::Math::VectorUtil::DeltaR(mu.momentum(), pf.momentum());
-      if (pf.particleId() == reco::PFCandidate::gamma && fabs(mu.eta()>1.479) 
+      Double_t dr = ROOT::Math::VectorUtil::DeltaR(mu.momentum(), pf->momentum());
+      if (pf->particleId() == reco::PFCandidate::gamma && fabs(mu.eta()>1.479) 
           && dr < 0.0) continue;
 
       // add the pf pt if it is inside the extRadius 
       if ( dr < deltaR_ ) {
 
         // scalar sum
-        ptSum += pf.pt();
+        ptSum += pf->pt();
 
         // directional sum
-        math::XYZVector transverse( pf.eta() - mu.eta()
-                                    , reco::deltaPhi(pf.phi(), mu.phi())
+        math::XYZVector transverse( pf->eta() - mu.eta()
+                                    , reco::deltaPhi(pf->phi(), mu.phi())
                                     , 0);
-        transverse *= pf.pt() / transverse.rho();
+        transverse *= pf->pt() / transverse.rho();
         if (transverse.rho() > 0) {
           isoAngleSum += transverse;
           coneParticles.push_back(transverse);
@@ -143,7 +144,7 @@ void MuonPFIsoSingleTypeMapProd::produce(edm::Event& iEvent, const edm::EventSet
 
         
         // for radial isolation:
-        ptSum_radial += pf.pt() * ( 1. - 10.*dr*deltaR_ );
+        ptSum_radial += pf->pt() * ( 1. - 10.*dr*deltaR_ );
 
 
       } // if deltaR
